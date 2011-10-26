@@ -99,6 +99,7 @@ module Rack #:nodoc:
 
       qs = headers[AUTHENTICATE_HEADER]
       if status.to_i == 401 && qs && qs.match(AUTHENTICATE_REGEXP)
+        body.close if body.respond_to?(:close)
         begin_authentication(env, qs)
       else
         [status, headers, body]
